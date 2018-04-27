@@ -102,7 +102,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void refreshPlaceInfo(){
-        this.selectedName = toPlaces.getSelectedItem().toString();
+        String temp= "";
+        try{
+            temp = toPlaces.getSelectedItem().toString();
+        } catch(Exception e){
+            //dumb catch :(
+        }
+        if(temp != null && temp.equals("")){
+            this.selectedName = temp;
+        }
+
 
         Cursor data = mDb.getPlaceByName(selectedName); //get the id associated with that name
         int itemID = -1;
@@ -170,7 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng place = new LatLng(this.lat, this.lon);
 
-        mMap.addMarker(new MarkerOptions().position(place).title(this.addTit).snippet(this.des));
+        mMap.addMarker(new MarkerOptions().position(place).title(this.addTit).snippet(this.addSt));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place,this.zoom),5000,null);
     }
 }
